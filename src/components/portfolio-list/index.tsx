@@ -4,16 +4,18 @@ import api, { bova } from '../../services/api';
 
 import PortfolioItem from '../portfolio-item';
 
-interface Ativos {
-  id: number,
+interface Assets {
   ticker: string,
-  isin: string,
-  description: string,
-  qtd: string
+    isin: string,
+    description: string,
+    average_price: number,
+    qtd: number,
+    created_at: string,
+    updated_at: string
 }
 
 const PortfolioList = () => {
-  const [assets, setAssets] = useState<Ativos[]>([]);
+  const [assets, setAssets] = useState<Assets[]>([]);
   
 
   useEffect(() => {
@@ -25,7 +27,7 @@ const PortfolioList = () => {
   return (
     <View>
       {assets.map(asset => (<PortfolioItem
-        key={0}
+        key={assets.length - assets.length}
         ticker={asset.ticker}
         description={asset.description}
         
