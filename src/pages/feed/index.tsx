@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import api from '../../services/api';
+import React from 'react';
+import feed from './feed';
+import Stacks from '../../components/stacks';
 
-const Feed = () => {
+const Index = () => {
 
-
-  return (
-    <View style={styles.container}>
-      <Text>Hello World</Text>
-    </View>
+  return (    
+       <Stacks name="Feed" component={feed} />
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-
-export default Feed;
+export default Index;

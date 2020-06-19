@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -12,6 +13,7 @@ const Tab = createBottomTabNavigator();
 
 const MyTabs = () => {
   return (
+    <NavigationContainer>
     <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -46,7 +48,9 @@ const MyTabs = () => {
       <Tab.Screen name="Busca" component={Search} />
       <Tab.Screen name="Notificações" component={Notifications} />
     </Tab.Navigator>
+    </NavigationContainer>
   );
+  
 }
 
 export default MyTabs;

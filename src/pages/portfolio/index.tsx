@@ -1,22 +1,12 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import Stacks from '../../components/stacks';
+import portfolio from './portfolio';
 
-import PortfolioList from '../../components/portfolio-list';
+const Index = () => {
 
-
-const Portfolio = () => {
   return (
-  <ScrollView style={styles.container}>  
-    <PortfolioList />
-  </ScrollView>
+    <Stacks name="Portfolio" component={portfolio} />
   );
 }
 
-export default Portfolio;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#000", 
-    flex: 1,
-  }
-})
+export default Index;
