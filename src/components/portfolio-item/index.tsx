@@ -36,7 +36,7 @@ const PortfolioItem = (asset: Asset) => {
   }, []);
 
   useEffect(() => {
-    api.get('operations').then(response => {
+    api.get(`operations/${asset.ticker}`).then(response => {
       const total:Total[] = response.data;
       const soma = total.reduce((acc, curr) => acc + curr.qtd, 0);
       setQtd(soma);

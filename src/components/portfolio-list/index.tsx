@@ -26,8 +26,8 @@ const PortfolioList = () => {
   
   return (
     <View>
-      {assets.map(asset => (<PortfolioItem
-        key={assets.length - assets.length}
+      {assets.map((asset, index) => (<PortfolioItem
+        key={index}
         ticker={asset.ticker}
         description={asset.description}
         

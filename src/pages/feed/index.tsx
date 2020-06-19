@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import api from '../../services/api';
 
 const Feed = () => {
+
+
   return (
     <View style={styles.container}>
       <Text>Hello World</Text>
