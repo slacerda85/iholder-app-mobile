@@ -27,12 +27,11 @@ const Portfolio = () => {
   <ScrollView style={styles.container}>
     
     <View>
-      {assets.map((asset, index) => (<View><PortfolioItem
+      {assets.map((asset, index) => (<PortfolioItem
         key={index}
         ticker={asset.ticker}
         description={asset.description}        
-      />      
-      </View>
+      />
       ))}
     </View>
     

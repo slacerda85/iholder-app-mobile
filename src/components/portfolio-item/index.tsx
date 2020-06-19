@@ -41,19 +41,18 @@ const PortfolioItem = (asset: Asset, ) => {
     api.get(`operations/${asset.ticker}`).then(response => {
       const total:Total[] = response.data;
       const sumQtd = total.reduce((acc, curr) => acc + curr.qtd, 0);
-      const sumValue = total.reduce((acc, curr) => acc + curr.total_operation_cost, 0)
-      const worth = sumValue / (sumQtd * price);
-      setWorth(worth);
+      const sumValue = total.reduce((acc, curr) => acc + curr.total_operation_cost, 0);
+      setWorth(sumValue);
       setQtd(sumQtd);
     });
-  }, [])
+  }, [qtd])
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>{asset.ticker} - {asset.description}</Text>
         <View style={styles.percentBox}>
-  <Text style={styles.percent}>{asset.percent}{worth
+  <Text style={styles.percent}>{ ((qtd * price - worth) / worth * 100)
   .toLocaleString('pt-BR', {
     minimumFractionDigits: 2,      
     maximumFractionDigits: 2,
