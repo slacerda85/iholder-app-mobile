@@ -1,9 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createStackNavigator();
-
-const Stacks = (props: any) => {
+const Stacks = () => {
+  const Stack = createStackNavigator();
 
   return (    
       <Stack.Navigator
@@ -14,7 +13,7 @@ const Stacks = (props: any) => {
           shadowColor: 'transparent',                    
         },        
       }}>
-        <Stack.Screen name={props.name} component={props.component} />
+        
       </Stack.Navigator>    
   );
 }

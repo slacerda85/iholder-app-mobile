@@ -29,8 +29,7 @@ const PortfolioList = () => {
       {assets.map((asset, index) => (<PortfolioItem
         key={index}
         ticker={asset.ticker}
-        description={asset.description}
-        
+        description={asset.description}        
       />))}
     </View>
   );

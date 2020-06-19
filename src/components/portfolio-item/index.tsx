@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import api, { bova } from '../../services/api';
 
 interface Asset {
@@ -20,13 +20,15 @@ interface Total {
   price: number,
   qtd: number,
   date: string,
-  fees: number
+  fees: number,
+  total_operation_cost: number
 }
 
 
-const PortfolioItem = (asset: Asset) => {
+const PortfolioItem = (asset: Asset, ) => {
   const [price, setPrice] = useState(0);
-  const [qtd, setQtd] = useState(0)
+  const [qtd, setQtd] = useState(0);
+  const [worth, setWorth] = useState(0);
 
   useEffect(() => {
     bova.get(asset.ticker).then(response => {
@@ -38,8 +40,11 @@ const PortfolioItem = (asset: Asset) => {
   useEffect(() => {
     api.get(`operations/${asset.ticker}`).then(response => {
       const total:Total[] = response.data;
-      const soma = total.reduce((acc, curr) => acc + curr.qtd, 0);
-      setQtd(soma);
+      const sumQtd = total.reduce((acc, curr) => acc + curr.qtd, 0);
+      const sumValue = total.reduce((acc, curr) => acc + curr.total_operation_cost, 0)
+      const worth = sumValue / (sumQtd * price);
+      setWorth(worth);
+      setQtd(sumQtd);
     });
   }, [])
 
@@ -48,7 +53,11 @@ const PortfolioItem = (asset: Asset) => {
       <View style={styles.header}>
         <Text style={styles.title}>{asset.ticker} - {asset.description}</Text>
         <View style={styles.percentBox}>
-          <Text style={styles.percent}>{asset.percent}25,00%</Text>
+  <Text style={styles.percent}>{asset.percent}{worth
+  .toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,      
+    maximumFractionDigits: 2,
+  })}%</Text>        
         </View>
       </View>
       <View >

@@ -1,11 +1,22 @@
 import React from 'react';
-import feed from './feed';
-import Stacks from '../../components/stacks';
+import index2 from './index2';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Index = () => {
 
+  const Stack = createStackNavigator();
+
   return (    
-       <Stacks name="Feed" component={feed} />
+    <Stack.Navigator
+    screenOptions={{
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#222222',
+        shadowColor: 'transparent',                    
+      },        
+    }}>
+      <Stack.Screen name="Feed" component={index2} />
+    </Stack.Navigator>  
   );
 }
 
