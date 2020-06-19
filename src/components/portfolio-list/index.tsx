@@ -13,21 +13,21 @@ interface Ativos {
 }
 
 const PortfolioList = () => {
-  const [ativos, setAtivos] = useState<Ativos[]>([]);
+  const [assets, setAssets] = useState<Ativos[]>([]);
   
 
   useEffect(() => {
-    api.get('ativos').then(response => {
-      setAtivos(response.data);
+    api.get('assets').then(response => {
+      setAssets(response.data);
     });
   }, []);
   
   return (
     <View>
-      {ativos.map(ativo => (<PortfolioItem
-        key={ativo.id}
-        ticker={ativo.ticker}
-        description={ativo.description}
+      {assets.map(asset => (<PortfolioItem
+        key={0}
+        ticker={asset.ticker}
+        description={asset.description}
         
       />))}
     </View>

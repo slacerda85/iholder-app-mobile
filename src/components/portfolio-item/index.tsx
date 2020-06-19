@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import api, { bova } from '../../services/api';
 
-interface Ativo {
+interface Asset {
   ticker: string,
   description: string,
   percent?: number,  
@@ -16,7 +16,7 @@ interface Intraday {
 
 interface Total {
   id: number,
-  ativo_id: number,
+  asset_id: number,
   price: number,
   qtd: number,
   date: string,
@@ -24,19 +24,19 @@ interface Total {
 }
 
 
-const PortfolioItem = (ativo: Ativo) => {
+const PortfolioItem = (asset: Asset) => {
   const [price, setPrice] = useState(0);
   const [qtd, setQtd] = useState(0)
 
   useEffect(() => {
-    bova.get(ativo.ticker).then(response => {
+    bova.get(asset.ticker).then(response => {
       const intraday: Intraday[] = response.data.TradgFlr.scty.lstQtn;
       setPrice(intraday[intraday.length - 1].closPric);
     })
   }, []);
 
   useEffect(() => {
-    api.get('transactions').then(response => {
+    api.get('operations').then(response => {
       const total:Total[] = response.data;
       const soma = total.reduce((acc, curr) => acc + curr.qtd, 0);
       setQtd(soma);
@@ -46,9 +46,9 @@ const PortfolioItem = (ativo: Ativo) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>{ativo.ticker} - {ativo.description}</Text>
+        <Text style={styles.title}>{asset.ticker} - {asset.description}</Text>
         <View style={styles.percentBox}>
-          <Text style={styles.percent}>{ativo.percent}25,00%</Text>
+          <Text style={styles.percent}>{asset.percent}25,00%</Text>
         </View>
       </View>
       <View >
