@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Feed from '../../pages/feed';
 import Portfolio from '../../pages/portfolio';
-import Main from '../../pages/main';
+import Menu from '../../pages/menu';
 import Search from '../../pages/search';
 import Notifications from '../../pages/notifications';
 
@@ -44,7 +44,7 @@ const MyTabs = () => {
       >
       <Tab.Screen name="Feed" component={Feed} />
       <Tab.Screen name="Portfolio" component={Portfolio} />      
-      <Tab.Screen name="Menu" component={Main} />
+      <Tab.Screen name="Menu" component={Menu} />
       <Tab.Screen name="Busca" component={Search} />
       <Tab.Screen name="Notificações" component={Notifications} />
     </Tab.Navigator>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet, Button } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import PortfolioItem from '../../components/portfolio-item';
 import api from '../../services/api';
 
@@ -13,7 +13,7 @@ interface Assets {
     updated_at: string
 }
 
-const Portfolio = ({ navigation }: any) => {
+const Portfolio = () => {
   const [assets, setAssets] = useState<Assets[]>([]);  
 
   useEffect(() => {
