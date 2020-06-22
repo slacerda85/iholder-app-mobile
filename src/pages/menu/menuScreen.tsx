@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginTop: 16,
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 8,
     },
     text: {
         color: "#FFF",
         fontSize: 16,
         padding: 8,
+        fontWeight: "bold"
     }
   })

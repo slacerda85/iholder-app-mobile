@@ -29,6 +29,7 @@ const PortfolioItem = (asset: Asset, ) => {
   const [price, setPrice] = useState(0);
   const [qtd, setQtd] = useState(0);
   const [worth, setWorth] = useState(0);
+  
 
   useEffect(() => {
     bova.get(asset.ticker).then(response => {
@@ -44,6 +45,7 @@ const PortfolioItem = (asset: Asset, ) => {
       const sumValue = total.reduce((acc, curr) => acc + curr.total_operation_cost, 0);
       setWorth(sumValue);
       setQtd(sumQtd);
+      
     });
   }, [qtd])
 

@@ -14,13 +14,20 @@ interface Assets {
 }
 
 const Portfolio = () => {
-  const [assets, setAssets] = useState<Assets[]>([]);  
+  const [assets, setAssets] = useState<Assets[]>([]);
+
+  async function getData() {
+    const { data } = await api.get('assets');
+    setAssets(data);
+  }
 
   useEffect(() => {
-    api.get('assets').then(response => {
-      setAssets(response.data);
-    });
-  }, []);
+    getData();
+    return;
+    // api.get('assets').then(response => {
+    //   setAssets(response.data);
+    // });
+  },[assets]);
   
 
   return (

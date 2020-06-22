@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
+import { TextInputMask } from 'react-native-masked-text';
 import {
     Text,
     Platform,
     View,
-    ScrollView,
     KeyboardAvoidingView,
     StyleSheet,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 import api from '../../services/api';
 
-const OperationScreen = () => { 
+const OperationScreen = () => {
     const [asset_ticker, setAsset_ticker] = useState('');
     const [price, setPrice] = useState('');
     const [qtd, setQtd] = useState('');
-    const [date, setDate] = useState('');
     const [fees, setFees] = useState('');
+    const [date, setDate] = useState('');
 
-    
+
+
+
     const sendData = async () => {
         const data = {
             asset_ticker,
@@ -31,36 +35,47 @@ const OperationScreen = () => {
 
         await api.post('/operations', data);
     }
-    
+
 
     return (
-        <ScrollView style={styles.container}>
         <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
-            
-            <Text style={styles.text}>Código do Ativo</Text>
-            <TextInput style={styles.TextInput}
-            autoCapitalize='characters'
-            onChangeText={setAsset_ticker} />
-            <Text style={styles.text}>Quantidade</Text>
-            <TextInput style={styles.TextInput}
-            keyboardType='numeric'
-            onChangeText={setQtd} />
-            <Text style={styles.text}>Valor</Text>
-            <TextInput style={styles.TextInput}
-            onChangeText={setPrice} />
-            <Text style={styles.text}>Taxas</Text>
-            <TextInput style={styles.TextInput}
-            onChangeText={setFees} />
-            <Text style={styles.text}>Data</Text>
-            <TextInput style={styles.TextInput}
-            onChangeText={setDate} />            
-            <TouchableOpacity style={styles.TouchableOpacity}
-            onPress={sendData}>
-                <Text style={styles.buttonText}>Adicionar</Text>
-            </TouchableOpacity>
+            behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={styles.inner}>
+                    <TextInput style={styles.TextInput}
+                        placeholder="Código do Ativo"
+                        placeholderTextColor='#AAA'
+                        autoCapitalize='characters'
+                        onChangeText={setAsset_ticker} />
+                    <TextInput style={styles.TextInput}
+                        placeholder="Quantidade"
+                        placeholderTextColor='#AAA'
+                        keyboardType='numeric'
+                        onChangeText={setQtd} />
+                    <TextInput style={styles.TextInput}
+                        placeholder="Valor"
+                        placeholderTextColor='#AAA'
+                        keyboardType='numeric'
+                        onChangeText={setPrice} />
+                    <TextInput style={styles.TextInput}
+                        placeholder="Taxas"
+                        placeholderTextColor='#AAA'
+                        keyboardType='numeric'
+                        onChangeText={setFees} />
+                    <TextInputMask
+                        type={'datetime'} style={styles.TextInput}
+                        placeholder="Data"
+                        placeholderTextColor='#AAA'
+                        value={date}
+                        onChangeText={text => setDate(text)} />
+                    <TouchableOpacity style={styles.TouchableOpacity}
+                        onPress={sendData}>
+                        <Text style={styles.buttonText}>Adicionar</Text>
+                    </TouchableOpacity>
+                    <View style={{ flex: 1 }} />
+                </View>
+            </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-        </ScrollView>
     );
 }
 
@@ -68,26 +83,27 @@ export default OperationScreen;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#000", 
+        backgroundColor: "#000",
         flex: 1,
     },
-    TextInput: {        
+    inner: {
+        flex: 1,
+        justifyContent: "flex-end"
+    },
+    TextInput: {
         marginHorizontal: 14,
-        marginTop: 8,
+        marginTop: 16,
         padding: 8,
-        backgroundColor: "#222",
-        borderRadius: 5,
+        backgroundColor: "#333",
+        borderRadius: 8,
         fontSize: 16,
         color: "#FFF"
-        
     },
     text: {
-        paddingHorizontal: 5,
         marginHorizontal: 14,
         marginTop: 14,
         color: "#FFF",
-        fontSize: 14,
-        fontWeight: "bold",
+        fontSize: 14
     },
     TouchableOpacity: {
         backgroundColor: "#4A4",
@@ -96,7 +112,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginTop: 16,
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 8,
     },
     buttonText: {
         color: "#FFF",
