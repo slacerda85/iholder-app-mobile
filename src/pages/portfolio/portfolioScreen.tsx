@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import PortfolioItem from '../../components/portfolio-item';
 import api from '../../services/api';
 
@@ -22,12 +22,8 @@ const Portfolio = () => {
   }
 
   useEffect(() => {
-    getData();
-    return;
-    // api.get('assets').then(response => {
-    //   setAssets(response.data);
-    // });
-  },[assets]);
+    getData();    
+  },);
   
 
   return (
@@ -40,7 +36,7 @@ const Portfolio = () => {
         description={asset.description}        
       />
       ))}
-    </View>
+    </View>    
     
   </ScrollView>
   );
@@ -52,5 +48,20 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000", 
     flex: 1,
+  },
+  button: {
+    backgroundColor: "#4A4",
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 16,
+        marginTop: 16,
+        padding: 10,
+        borderRadius: 8,
+  },
+  text: {
+    color: "#FFF",
+        fontSize: 16,
+        padding: 8,
+        fontWeight: "bold"
   }
 })

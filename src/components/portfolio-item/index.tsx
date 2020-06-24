@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import api, { bova } from '../../services/api';
 
 interface Asset {
   ticker: string,
   description: string,
-  percent?: number,  
+  percent?: number,
 }
 
 interface Intraday {
@@ -25,52 +25,56 @@ interface Total {
 }
 
 
-const PortfolioItem = (asset: Asset, ) => {
+const PortfolioItem = (asset: Asset,) => {
   const [price, setPrice] = useState(0);
   const [qtd, setQtd] = useState(0);
   const [worth, setWorth] = useState(0);
-  
+
+  async function getOperations() {
+    const { data }: { data: Total[] } = await api.get(`operations/${asset.ticker}`);
+    const sumQtd = await data.reduce((acc, curr) => acc + curr.qtd, 0);
+    const sumValue = await data.reduce((acc, curr) => acc + curr.total_operation_cost, 0);
+    setWorth(sumValue);
+    setQtd(sumQtd);
+  }
+
 
   useEffect(() => {
     bova.get(asset.ticker).then(response => {
       const intraday: Intraday[] = response.data.TradgFlr.scty.lstQtn;
       setPrice(intraday[intraday.length - 1].closPric);
     })
-  }, []);
+  },);
 
   useEffect(() => {
-    api.get(`operations/${asset.ticker}`).then(response => {
-      const total:Total[] = response.data;
-      const sumQtd = total.reduce((acc, curr) => acc + curr.qtd, 0);
-      const sumValue = total.reduce((acc, curr) => acc + curr.total_operation_cost, 0);
-      setWorth(sumValue);
-      setQtd(sumQtd);
-      
-    });
-  }, [qtd])
+    getOperations();
+    
+  },)
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>{asset.ticker} - {asset.description}</Text>
-        <View style={styles.percentBox}>
-  <Text style={styles.percent}>{ ((qtd * price - worth) / worth * 100)
-  .toLocaleString('pt-BR', {
-    minimumFractionDigits: 2,      
-    maximumFractionDigits: 2,
-  })}%</Text>        
+    <TouchableWithoutFeedback onPress={() => {}}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>{asset.ticker} - {asset.description}</Text>
+          <View style={styles.percentBox}>
+            <Text style={styles.percent}>{((qtd * price - worth) / worth * 100)
+              .toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}%</Text>
+          </View>
+        </View>
+        <View >
+          <Text style={styles.text}>Saldo Atual: <Text
+            style={styles.textPrice}>R${(qtd * price)
+              .toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</Text>
+          </Text>
         </View>
       </View>
-      <View >
-        <Text style={styles.text}>Saldo Atual: <Text
-          style={styles.textPrice}>R${(qtd * price)
-            .toLocaleString('pt-BR', {
-            minimumFractionDigits: 2,      
-            maximumFractionDigits: 2,
-          })}</Text>
-        </Text>
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 

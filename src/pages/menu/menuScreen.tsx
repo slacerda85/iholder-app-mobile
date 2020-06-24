@@ -5,7 +5,8 @@ const MenuScreen = ({ navigation }: any) =>{
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.TouchableOpacity}>
+            <TouchableOpacity style={styles.TouchableOpacity}
+            onPress={() => navigation.navigate('AdicionarAtivos')}>
             <Text style={styles.text}>Adicionar Ativo</Text>
             </TouchableOpacity>
             

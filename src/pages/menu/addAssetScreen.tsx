@@ -5,6 +5,10 @@ import {
     TouchableWithoutFeedback,
     TouchableOpacity,
     StyleSheet,
-
 } from 'react-native';
 
+const AddAssetScreen = () => {
+    return (<View></View>);
+}
+
+export default AddAssetScreen;
