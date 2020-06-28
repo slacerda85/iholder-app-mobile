@@ -1,7 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Portfolio from './portfolio';
-import OperationScreen from '../menu/operationScreen';
 
 const Index = () => {
 
