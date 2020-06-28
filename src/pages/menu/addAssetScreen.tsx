@@ -26,6 +26,10 @@ const AddAssetScreen = () => {
         }
 
        await api.post('/assets', data);
+
+       setTicker('');
+       setIsin('');
+       setDescription('');
     }
 
     return (<KeyboardAvoidingView
@@ -35,17 +39,20 @@ const AddAssetScreen = () => {
                     <TextInput style={styles.TextInput}
                         placeholder="Código do Ativo"
                         placeholderTextColor='#AAA'
+                        value={ticker}
                         autoCapitalize='characters'
                         onChangeText={setTicker} />
                     <TextInput style={styles.TextInput}
                         placeholder="ISIN"
                         placeholderTextColor='#AAA'
+                        value={isin}
                         keyboardType='default'
                         autoCapitalize='characters'
                         onChangeText={setIsin} />
                     <TextInput style={styles.TextInput}
                         placeholder="Descrição"
                         placeholderTextColor='#AAA'
+                        value={description}
                         keyboardType='default'
                         onChangeText={setDescription} />
                     

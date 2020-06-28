@@ -1,12 +1,14 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, SafeAreaView } from 'react-native';
 import Routes from './src/routes';
 
 export default function App() {
   return (
     <>
     <StatusBar barStyle="light-content" translucent />
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#222222' }}>
     <Routes />
+    </SafeAreaView>
     </>
   );
 }

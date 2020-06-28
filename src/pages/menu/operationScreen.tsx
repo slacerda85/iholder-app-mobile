@@ -34,6 +34,12 @@ const OperationScreen = () => {
 
 
         await api.post('/operations', data);
+
+        setAsset_ticker('');
+        setPrice('');
+        setQtd('');
+        setFees('');
+        setDate('');
     }
 
 
@@ -45,21 +51,25 @@ const OperationScreen = () => {
                     <TextInput style={styles.TextInput}
                         placeholder="Código do Ativo"
                         placeholderTextColor='#AAA'
+                        value={asset_ticker}
                         autoCapitalize='characters'
                         onChangeText={setAsset_ticker} />
                     <TextInput style={styles.TextInput}
                         placeholder="Quantidade"
                         placeholderTextColor='#AAA'
+                        value={qtd}
                         keyboardType='numeric'
                         onChangeText={setQtd} />
                     <TextInput style={styles.TextInput}
                         placeholder="Valor"
                         placeholderTextColor='#AAA'
+                        value={price}
                         keyboardType='numeric'
                         onChangeText={setPrice} />
                     <TextInput style={styles.TextInput}
                         placeholder="Taxas"
                         placeholderTextColor='#AAA'
+                        value={fees}
                         keyboardType='numeric'
                         onChangeText={setFees} />
                     <TextInputMask

@@ -1,4 +1,5 @@
 import React from 'react';
+import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -12,7 +13,7 @@ import Notifications from '../../pages/notifications';
 const Tab = createBottomTabNavigator();
 
 const MyTabs = () => {
-  return (
+  return (       
     <NavigationContainer>
     <Tab.Navigator
         screenOptions={({ route }) => ({

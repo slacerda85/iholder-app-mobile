@@ -32,8 +32,8 @@ const PortfolioItem = (asset: Asset,) => {
 
   async function getOperations() {
     const { data }: { data: Total[] } = await api.get(`operations/${asset.ticker}`);
-    const sumQtd = await data.reduce((acc, curr) => acc + curr.qtd, 0);
-    const sumValue = await data.reduce((acc, curr) => acc + curr.total_operation_cost, 0);
+    const sumQtd = data.reduce((acc, curr) => acc + curr.qtd, 0);
+    const sumValue = data.reduce((acc, curr) => acc + curr.total_operation_cost, 0);
     setWorth(sumValue);
     setQtd(sumQtd);
   }
