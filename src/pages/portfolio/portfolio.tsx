@@ -30,12 +30,12 @@ const Portfolio = () => {
   <ScrollView style={styles.container}>
     
     <View>
-      {assets.map((asset, index) => (<><PortfolioItem
+      {assets.map((asset, index) => (<PortfolioItem
         key={index}
         ticker={asset.ticker}
-        description={asset.description}
+        description={asset.description} 
       />
-      </>
+      
       ))}
     </View>    
     

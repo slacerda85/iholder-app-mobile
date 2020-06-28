@@ -37,6 +37,7 @@ const MyTabs = () => {
           },
         })}
         tabBarOptions={{
+          style: {borderTopColor: '#222222'},
           activeTintColor: '#4A4',
           inactiveTintColor: '#CCC',
           activeBackgroundColor: '#222222',
