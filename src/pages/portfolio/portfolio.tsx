@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import PortfolioItem from '../../components/portfolio-item';
 import api from '../../services/api';
+import NetWorth from '../../components/net-worth';
 
 interface Assets {
   ticker: string,
@@ -26,9 +27,9 @@ const Portfolio = () => {
   },);
   
 
-  return (
+  return ( 
   <ScrollView style={styles.container}>
-    
+    <NetWorth />
     <View>
       {assets.map((asset, index) => (<PortfolioItem
         key={index}
@@ -38,8 +39,8 @@ const Portfolio = () => {
       
       ))}
     </View>    
-    
   </ScrollView>
+  
   );
 }
 

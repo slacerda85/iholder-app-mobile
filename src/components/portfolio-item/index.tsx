@@ -3,7 +3,8 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableWithoutFeedback } from 'react-native';
+  TouchableWithoutFeedback,
+Alert } from 'react-native';
 import api, { bova } from '../../services/api';
 
 
@@ -46,10 +47,14 @@ const PortfolioItem = (asset: Asset,) => {
 
 
   useEffect(() => {
-    bova.get(asset.ticker).then(response => {
-      const intraday: Intraday[] = response.data.TradgFlr.scty.lstQtn;
-      setPrice(intraday[intraday.length - 1].closPric);
-    })
+    try {
+      bova.get(asset.ticker).then(response => {
+        const intraday: Intraday[] = response.data.TradgFlr.scty.lstQtn;
+        setPrice(intraday[intraday.length - 1].closPric);
+      })
+    } catch (error) {
+      Alert.alert('Ops', 'Houve um erro.')
+    }
   },);
 
   useEffect(() => {
@@ -102,7 +107,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "left",
     color: "#FFF"
   },
