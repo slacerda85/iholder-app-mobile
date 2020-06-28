@@ -1,8 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import PortfolioScreen from './portfolioScreen';
+import Portfolio from './portfolio';
+import OperationScreen from '../menu/operationScreen';
 
-const Portfolio = () => {
+const Index = () => {
 
   const Stack = createStackNavigator();
 
@@ -16,8 +17,8 @@ const Portfolio = () => {
         shadowColor: 'transparent',                    
       },        
     }}>
-      <Stack.Screen name="Portfolio" component={PortfolioScreen} />      
+      <Stack.Screen name="Portfolio" component={Portfolio} />
     </Stack.Navigator>  
   );
 }
-export default Portfolio;
+export default Index;

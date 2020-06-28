@@ -11,7 +11,7 @@ const Index = () => {
 
   return (    
     <Stack.Navigator
-    initialRouteName="Portfolio"
+    initialRouteName="Menu"
     screenOptions={{
       headerTintColor: '#fff',
       headerStyle: {

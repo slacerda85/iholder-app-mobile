@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import PortfolioItem from '../../components/portfolio-item';
 import api from '../../services/api';
 
@@ -30,11 +30,12 @@ const Portfolio = () => {
   <ScrollView style={styles.container}>
     
     <View>
-      {assets.map((asset, index) => (<PortfolioItem
+      {assets.map((asset, index) => (<><PortfolioItem
         key={index}
         ticker={asset.ticker}
-        description={asset.description}        
+        description={asset.description}
       />
+      </>
       ))}
     </View>    
     
@@ -63,5 +64,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
         padding: 8,
         fontWeight: "bold"
-  }
+  },  
+  TouchableOpacity: {
+    backgroundColor: "#4A4",
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 16,
+    marginTop: 16,
+    padding: 10,
+    borderRadius: 8,
+},
 })

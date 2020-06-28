@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { 
+  View,
+  Text,
+  StyleSheet,
+  TouchableWithoutFeedback } from 'react-native';
 import api, { bova } from '../../services/api';
+
 
 interface Asset {
   ticker: string,
   description: string,
   percent?: number,
+  
 }
 
 interface Intraday {
@@ -61,7 +67,7 @@ const PortfolioItem = (asset: Asset,) => {
               .toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
-              })}%</Text>
+              })}%</Text>              
           </View>
         </View>
         <View >
@@ -118,5 +124,5 @@ const styles = StyleSheet.create({
   textPrice: {
     color: "#4A4",
     fontWeight: "bold",
-  }
+  },
 })
