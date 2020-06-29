@@ -76,7 +76,7 @@ const PortfolioItem = (asset: Asset,) => {
               })}%</Text>              
           </View>
         </View>
-        <View >
+        <View style={styles.header}>
           <Text style={styles.text}>Saldo Atual: <Text
             style={styles.textPrice}>R${(qtd * price)
               .toLocaleString('pt-BR', {
@@ -84,6 +84,12 @@ const PortfolioItem = (asset: Asset,) => {
                 maximumFractionDigits: 2,
               })}</Text>
           </Text>
+          <Text
+            style={styles.textPrice}>{(((qtd * price) - worth) >= 0 ? '+' : '-') + ((qtd * price) - worth)
+              .toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -128,6 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   textPrice: {
+    paddingTop: 4,
     color: "#4A4",
     fontWeight: "bold",
   },
