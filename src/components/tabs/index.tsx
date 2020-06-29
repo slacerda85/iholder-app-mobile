@@ -1,8 +1,8 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { BlurView } from '@react-native-community/blur';
 
 import Feed from '../../pages/feed';
 import Portfolio from '../../pages/portfolio';
@@ -13,9 +13,9 @@ import Notifications from '../../pages/notifications';
 const Tab = createBottomTabNavigator();
 
 const MyTabs = () => {
-  return (       
+  return (
     <NavigationContainer>
-    <Tab.Navigator
+      <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName = 'ios-home';
@@ -37,22 +37,23 @@ const MyTabs = () => {
           },
         })}
         tabBarOptions={{
-          style: {borderTopColor: '#444444'},
+          style: { borderTopColor: '#444444' },
           activeTintColor: '#4A4',
           inactiveTintColor: '#CCC',
-          activeBackgroundColor: '#222222',
-          inactiveBackgroundColor: '#222222',
+          activeBackgroundColor: '#1B1B1B',
+          inactiveBackgroundColor: '#1B1B1B',
         }}
+        
       >
-      <Tab.Screen name="Feed" component={Feed} />
-      <Tab.Screen name="Portfolio" component={Portfolio} />      
-      <Tab.Screen name="Menu" component={Menu} />
-      <Tab.Screen name="Busca" component={Search} />
-      <Tab.Screen name="Notificações" component={Notifications} />
-    </Tab.Navigator>
+        <Tab.Screen name="Feed" component={Feed} />
+        <Tab.Screen name="Portfolio" component={Portfolio} />
+        <Tab.Screen name="Menu" component={Menu} />
+        <Tab.Screen name="Busca" component={Search} />
+        <Tab.Screen name="Notificações" component={Notifications} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
-  
+
 }
 
 export default MyTabs;

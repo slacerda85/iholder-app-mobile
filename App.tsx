@@ -6,7 +6,7 @@ export default function App() {
   return (
     <>
     <StatusBar barStyle="light-content" translucent />
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#222222' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#1B1B1B' }}>
     <Routes />
     </SafeAreaView>
     </>

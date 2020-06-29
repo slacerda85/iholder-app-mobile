@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import api, { bova } from '../../services/api';
+import { View } from 'react-native';
+import api from '../../services/api';
 
 import PortfolioItem from '../portfolio-item';
 

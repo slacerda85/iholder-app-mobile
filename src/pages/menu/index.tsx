@@ -15,7 +15,7 @@ const Index = () => {
     screenOptions={{
       headerTintColor: '#fff',
       headerStyle: {
-        backgroundColor: '#222222',
+        backgroundColor: '#1B1B1B',
         shadowColor: 'transparent',                    
       },        
     }}>

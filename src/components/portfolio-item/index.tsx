@@ -50,7 +50,8 @@ const PortfolioItem = (asset: Asset,) => {
     try {
       bova.get(asset.ticker).then(response => {
         const intraday: Intraday[] = response.data.TradgFlr.scty.lstQtn;
-        setPrice(intraday[intraday.length - 1].closPric);
+        const lastPrice = intraday[intraday.length - 1].closPric;
+        setPrice((lastPrice != undefined ? lastPrice : 0));
       })
     } catch (error) {
       Alert.alert('Ops', 'Houve um erro.')
