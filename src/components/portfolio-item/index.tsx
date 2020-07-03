@@ -7,12 +7,14 @@ import {
 Alert } from 'react-native';
 import api, { bova } from '../../services/api';
 
-
 interface Asset {
-  ticker: string,
-  description: string,
-  percent?: number,
-  
+  asset_ticker: string,
+}
+
+interface Balance {
+  asset_ticker: string,
+  qtd: number,
+  avg_price: number,  
 }
 
 interface Intraday {
@@ -21,55 +23,46 @@ interface Intraday {
   prcFlcn: number
 }
 
-interface Operation {
-  id: number,
-  asset_id: number,
-  price: number,
-  qtd: number,
-  date: string,
-  fees: number,
-  total_operation_cost: number
-}
 
-
-const PortfolioItem = (asset: Asset,) => {
-  const [price, setPrice] = useState(0);
+const PortfolioItem = (asset: Asset) => {
+  const [currentPrice, setCurrentPrice] = useState(0);
   const [qtd, setQtd] = useState(0);
-  const [worth, setWorth] = useState(0);
+  const [avgPrice, setAvgPrice] = useState(0);
+  const [description, setDescription] = useState('teste');
 
-  async function getOperations() {
-    const { data }: { data: Operation[] } = await api.get(`operations/${asset.ticker}`);
-    const sumQtd = data.reduce((acc, curr) => acc + curr.qtd, 0);
-    const sumValue = data.reduce((acc, curr) => acc + curr.total_operation_cost, 0);
-    setWorth(sumValue);
-    setQtd(sumQtd);
+  async function getBalance() {
+    const { data }: {data: Balance} = await api.get(`balance/${asset.asset_ticker}`);
+    const { qtd, avg_price } = await data;
+    setQtd(qtd);
+    setAvgPrice(avg_price);
   }
 
+  async function getPrice() {
+    const { data } = await bova.get(asset.asset_ticker);
+    const intraday: Intraday[] = await data.TradgFlr.scty.lstQtn;
+    const lastPrice = intraday[intraday.length - 1].closPric;
+    setCurrentPrice((lastPrice != undefined ? lastPrice : 0));
+  }
+
+  async function getDescription() {
+    const { data } = await api.get(`assets/${asset.asset_ticker}`);
+     setDescription(await data.description);
+  }
 
   useEffect(() => {
-    try {
-      bova.get(asset.ticker).then(response => {
-        const intraday: Intraday[] = response.data.TradgFlr.scty.lstQtn;
-        const lastPrice = intraday[intraday.length - 1].closPric;
-        setPrice((lastPrice != undefined ? lastPrice : 0));
-      })
-    } catch (error) {
-      Alert.alert('Ops', 'Houve um erro.')
-    }
+    getBalance();
+    getPrice(); 
+    getDescription();   
   },);
-
-  useEffect(() => {
-    getOperations();
-    
-  },)
+  
 
   return (
     <TouchableWithoutFeedback onPress={() => {}}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>{asset.ticker} - {asset.description}</Text>
+          <Text style={styles.title}>{asset.asset_ticker} - {description}</Text>
           <View style={styles.percentBox}>
-            <Text style={styles.percent}>{((qtd * price - worth) / worth * 100)
+            <Text style={styles.percent}>{((qtd * currentPrice - avgPrice) / avgPrice * 100)
               .toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
@@ -78,14 +71,16 @@ const PortfolioItem = (asset: Asset,) => {
         </View>
         <View style={styles.header}>
           <Text style={styles.text}>Saldo Atual: <Text
-            style={styles.textPrice}>R${(qtd * price)
+            style={styles.textPrice}>R${(qtd * currentPrice)
               .toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}</Text>
           </Text>
           <Text
-            style={styles.textPrice}>{(((qtd * price) - worth) >= 0 ? '+' : '-') + ((qtd * price) - worth)
+            style={styles.textPrice}>{
+              (((qtd * currentPrice) - avgPrice) >= 0 ? '+' : '-') +
+               ((qtd * currentPrice) - avgPrice)
               .toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,

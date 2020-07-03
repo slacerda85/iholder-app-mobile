@@ -4,39 +4,35 @@ import PortfolioItem from '../../components/portfolio-item';
 import api from '../../services/api';
 import NetWorth from '../../components/net-worth';
 
-interface Assets {
-  ticker: string,
-    isin: string,
-    description: string,
-    average_price: number,
-    qtd: number,
-    created_at: string,
-    updated_at: string
+interface Portfolio {
+  asset_ticker: string,
+  qtd: number,
+  avg_price: number  
+  created_at: string,
+  updated_at: string
 }
 
 const Portfolio = () => {
-  const [assets, setAssets] = useState<Assets[]>([]);
-
-  async function getData() {
-    const { data } = await api.get('assets');
-    setAssets(data);
-  }
+  const [portfolio, setPortfolio] = useState<Portfolio[]>([]);  
 
   useEffect(() => {
-    getData();    
-  },);
-  
 
+    const fetchData = async () => {
+    const response = await api.get('balance');
+    setPortfolio(response.data);
+    }
+
+    fetchData();
+  }, );
+  
   return ( 
   <ScrollView style={styles.container}>
     <NetWorth />
     <View>
-      {assets.map((asset, index) => (<PortfolioItem
+      {portfolio.map((asset, index) => (<PortfolioItem
         key={index}
-        ticker={asset.ticker}
-        description={asset.description} 
-      />
-      
+        asset_ticker={asset.asset_ticker}
+      />      
       ))}
     </View>    
   </ScrollView>

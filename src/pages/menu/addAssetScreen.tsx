@@ -16,27 +16,27 @@ import api from '../../services/api';
 interface BalanceItem {
   asset_ticker: string,
   qtd: number,
-  avg_price: number,  
+  avg_price: number,
 }
 
 const AddAssetScreen = () => {
 
   const [ticker, setTicker] = useState('');
+  const [filtered, setFiltered] = useState('erro');
 
   const sendData = async () => {
 
     try {
-      const { data } = await api.get('/balance');
 
-      if (data.find(((item: BalanceItem) => item.asset_ticker == ticker)) == undefined) {
-        await api.post('/balance', ticker);
+      const data = {
+        asset_ticker: ticker
       }
-      else {
-        Alert.alert('Ops', 'Ativo já cadastrado.')
-      }
+
+      await api.post('/balance', data);
+      return Alert.alert('Sucesso', 'Cadastrado com sucesso.');
 
     } catch (error) {
-      Alert.alert('Ops', 'Erro na requisição.')
+      Alert.alert('Ops', 'Ativo já cadastrado.');
     }
 
 
