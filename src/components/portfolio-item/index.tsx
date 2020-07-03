@@ -21,7 +21,7 @@ interface Intraday {
   prcFlcn: number
 }
 
-interface Total {
+interface Operation {
   id: number,
   asset_id: number,
   price: number,
@@ -38,7 +38,7 @@ const PortfolioItem = (asset: Asset,) => {
   const [worth, setWorth] = useState(0);
 
   async function getOperations() {
-    const { data }: { data: Total[] } = await api.get(`operations/${asset.ticker}`);
+    const { data }: { data: Operation[] } = await api.get(`operations/${asset.ticker}`);
     const sumQtd = data.reduce((acc, curr) => acc + curr.qtd, 0);
     const sumValue = data.reduce((acc, curr) => acc + curr.total_operation_cost, 0);
     setWorth(sumValue);
