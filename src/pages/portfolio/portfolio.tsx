@@ -7,36 +7,36 @@ import NetWorth from '../../components/net-worth';
 interface Portfolio {
   asset_ticker: string,
   qtd: number,
-  avg_price: number  
+  avg_price: number
   created_at: string,
   updated_at: string
 }
 
 const Portfolio = () => {
-  const [portfolio, setPortfolio] = useState<Portfolio[]>([]);  
+  const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
 
-  useEffect(() => {
-
-    const fetchData = async () => {
+  async function fetchData() {
     const response = await api.get('balance');
     setPortfolio(response.data);
-    }
+  }
 
+
+  useEffect(() => {
     fetchData();
-  }, );
-  
-  return ( 
-  <ScrollView style={styles.container}>
-    <NetWorth />
-    <View>
-      {portfolio.map((asset, index) => (<PortfolioItem
-        key={index}
-        asset_ticker={asset.asset_ticker}
-      />      
-      ))}
-    </View>    
-  </ScrollView>
-  
+  });
+
+  return (
+    <ScrollView style={styles.container}>
+      <NetWorth />
+      <View>
+        {portfolio.map((asset, index) => (<PortfolioItem
+          key={index}
+          asset_ticker={asset.asset_ticker}
+        />
+        ))}
+      </View>
+    </ScrollView>
+
   );
 }
 
@@ -44,24 +44,24 @@ export default Portfolio;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000", 
+    backgroundColor: "#000",
     flex: 1,
   },
   button: {
     backgroundColor: "#4A4",
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: 16,
-        marginTop: 16,
-        padding: 10,
-        borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 16,
+    marginTop: 16,
+    padding: 10,
+    borderRadius: 8,
   },
   text: {
     color: "#FFF",
-        fontSize: 16,
-        padding: 8,
-        fontWeight: "bold"
-  },  
+    fontSize: 16,
+    padding: 8,
+    fontWeight: "bold"
+  },
   TouchableOpacity: {
     backgroundColor: "#4A4",
     alignItems: 'center',
@@ -70,5 +70,5 @@ const styles = StyleSheet.create({
     marginTop: 16,
     padding: 10,
     borderRadius: 8,
-},
+  },
 })
