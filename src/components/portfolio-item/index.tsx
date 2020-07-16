@@ -25,7 +25,7 @@ const PortfolioItem = (asset: Portfolio) => {
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{asset.asset_ticker}
-          <Text style={styles.description}> - {asset.description.substring(0, 25)}</Text></Text>
+          <Text style={styles.description}> - {asset.description.substring(0, 28)}</Text></Text>
           <View style={styles.percentBox}>
             <Text style={styles.percent}>{asset.percent
             .toLocaleString('pt-BR', {
