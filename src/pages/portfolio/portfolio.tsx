@@ -1,39 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import PortfolioItem from '../../components/portfolio-item';
 import api from '../../services/api';
 import NetWorth from '../../components/net-worth';
 
 interface Portfolio {
   asset_ticker: string,
+  description: string,
   qtd: number,
-  avg_price: number
-  created_at: string,
-  updated_at: string
+  avg_price: number,
+  lastPrice: number,
+  profit: number,
+  percent: number
 }
 
 const Portfolio = () => {
   const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
 
-  async function fetchData() {
-    const response = await api.get('balance');
-    setPortfolio(response.data);
+  async function getPortfolio() {
+    const { data } = await api.get('portfolio');
+    setPortfolio(data);
   }
 
-
   useEffect(() => {
-    fetchData();
-  });
+    getPortfolio();
+  }, [])
 
   return (
     <ScrollView style={styles.container}>
       <NetWorth />
       <View>
-        {portfolio.map((asset, index) => (<PortfolioItem
-          key={index}
-          asset_ticker={asset.asset_ticker}
-        />
-        ))}
+        {portfolio.map(item => <PortfolioItem
+          asset_ticker={item.asset_ticker}
+          avg_price={item.avg_price}
+          description={item.description}
+          lastPrice={item.lastPrice}
+          percent={item.percent}
+          profit={item.profit}
+          qtd={item.qtd}
+        />)}
       </View>
     </ScrollView>
 
@@ -72,3 +77,4 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
 })
+

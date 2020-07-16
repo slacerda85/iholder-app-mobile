@@ -8,115 +8,46 @@ import {
 } from 'react-native';
 import api, { bova } from '../../services/api';
 
-interface Asset {
+interface Portfolio {
   asset_ticker: string,
-}
-
-interface Balance {
-  asset_ticker: string,
+  description: string,
   qtd: number,
   avg_price: number,
+  lastPrice: number,
+  profit: number,
+  percent: number
 }
 
-interface Intraday {
-  closPric: number,
-  dtTm: string,
-  prcFlcn: number
-}
-
-const PortfolioItem = (asset: Asset) => {
-  const { asset_ticker } = asset;
-  const [currentPrice, setCurrentPrice] = useState(0);
-  const [qtd, setQtd] = useState(0);
-  const [avgPrice, setAvgPrice] = useState(0);
-  const [description, setDescription] = useState('teste');
-  const [percent, setPercent] = useState('');
-  const [rentab, setRentab] = useState('');
-
-  async function getBalance() {
-    const { data } = await api.get(`balance/${asset_ticker}`);
-    const { qtd, avg_price } = data[0];
-    setQtd(qtd);
-    setAvgPrice(avg_price);
-  }
-
-  async function getPrice() {
-    const { data } = await bova.get(asset.asset_ticker);
-    const intraday: Intraday[] = await data.TradgFlr.scty.lstQtn;
-    const lastPrice = intraday[intraday.length - 1].closPric;
-    setCurrentPrice((lastPrice != undefined ? lastPrice : 0));
-  }
-
-  async function getDescription() {
-    const { data } = await api.get(`assets/${asset_ticker}`);
-    setDescription(data[0].description);
-  }
-
-  function getPercent() {
-    const result = ((qtd * currentPrice - avgPrice) / avgPrice * 100);
-    if (!isNaN(result)) {
-      setPercent(result.toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }))
-    } else {
-      setPercent((0).toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }))
-    }
-  }
-
-  function getRentab() {
-    const rent = (((qtd * currentPrice) - avgPrice) >= 0 ? '+' : '-') +
-    ((qtd * currentPrice) - avgPrice)
-      .toLocaleString('pt-BR', {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-      setRentab(rent);
-  }
-
-  useEffect(() => {
-    getBalance();
-  }, );
-
-  useEffect(() => {
-    getPrice();
-  });
-
-  useEffect(() => {
-    getDescription();
-  }, []);
-
-  useEffect(() => {
-    getPercent();
-    getRentab();
-  }, [])
-
+const PortfolioItem = (asset: Portfolio) => {
   
-
-
   return (
-    <TouchableWithoutFeedback onPress={() => { }}>
+    <TouchableWithoutFeedback onPress={() => {}}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{asset.asset_ticker}
-          <Text style={styles.description}> - {description}</Text></Text>
+          <Text style={styles.description}> - {asset.description.substring(0, 25)}</Text></Text>
           <View style={styles.percentBox}>
-            <Text style={styles.percent}>{percent}%</Text>
+            <Text style={styles.percent}>{asset.percent
+            .toLocaleString('pt-BR', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}%</Text>
           </View>
         </View>
         <View style={styles.header}>
           <Text style={styles.text}>Saldo Atual: <Text
-            style={styles.textPrice}>R${(qtd * currentPrice)
+            style={styles.textPrice}>R${(asset.qtd * asset.lastPrice)
               .toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}</Text>
           </Text>
           <Text
-            style={styles.textPrice}>{rentab}</Text>
+            style={styles.textPrice}>R${asset.percent
+              .toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -158,7 +89,8 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontWeight: "bold",
     fontSize: 14,
-    padding: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
     borderRadius: 4,
   },
   text: {
