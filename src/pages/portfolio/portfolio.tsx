@@ -17,6 +17,7 @@ interface Portfolio {
 
 const Portfolio = () => {
   const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
+  const [tick, setTick] = useState(false);
 
   async function getPortfolio() {
     const { data } = await api.get('portfolio');
@@ -25,7 +26,11 @@ const Portfolio = () => {
 
   useEffect(() => {
     getPortfolio();
-  }, [])
+  }, [tick])
+
+  useEffect(() => {
+    setTimeout(() => {setTick(!tick)}, 3000)
+  }, [tick])
 
   return (
     <ScrollView style={styles.container}>

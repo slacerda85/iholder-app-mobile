@@ -14,6 +14,7 @@ const NetWorth = () => {
   "profit": 0,
   "percent": 0
   });
+  const [tick, setTick] = useState(false);
 
   async function getTotal() {
     const { data } = await api.get('networth');
@@ -22,7 +23,11 @@ const NetWorth = () => {
 
   useEffect(() => {
     getTotal()
-  },[])
+  },[tick])
+
+  useEffect(() => {
+    setTimeout(() => {setTick(!tick)}, 3000)
+  }, [tick])
 
   return (
     <View style={styles.container}>

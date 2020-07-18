@@ -13,34 +13,27 @@ import {
 } from 'react-native';
 import api from '../../services/api';
 
-interface BalanceItem {
-  asset_ticker: string,
-  qtd: number,
-  avg_price: number,
-}
-
 const AddAssetScreen = () => {
 
   const [ticker, setTicker] = useState('');
-  const [filtered, setFiltered] = useState('erro');
 
   const sendData = async () => {
 
     try {
+      const data = { asset_ticker: ticker };
 
-      const data = {
-        asset_ticker: ticker
-      }
+      await api.post('/portfolio', data);
 
-      await api.post('/balance', data);
-      return Alert.alert('Sucesso', 'Cadastrado com sucesso.');
+      setTicker('')
+      Keyboard.dismiss();
+      return Alert.alert('Sucesso', 'Cadastro concluído.');
 
     } catch (error) {
-      Alert.alert('Ops', 'Ativo já cadastrado.');
+      setTicker('')
+      Keyboard.dismiss();
+      Alert.alert('Ops', 'Ativo já cadastrado ou inexistente.');
     }
-
-
-    setTicker('');
+    
   }
 
   return (
@@ -53,7 +46,9 @@ const AddAssetScreen = () => {
             placeholderTextColor='#AAA'
             value={ticker}
             autoCapitalize='characters'
-            onChangeText={setTicker} />
+            returnKeyType='send'
+            onChangeText={setTicker}
+            onSubmitEditing={sendData}/>
 
           <TouchableOpacity style={styles.TouchableOpacity}
             onPress={sendData}>
