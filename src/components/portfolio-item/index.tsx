@@ -43,7 +43,7 @@ const PortfolioItem = (asset: Portfolio) => {
               })}</Text>
           </Text>
           <Text
-            style={styles.textPrice}>R${asset.percent
+            style={styles.textPrice}>R${asset.profit
               .toLocaleString('pt-BR', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,

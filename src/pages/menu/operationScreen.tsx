@@ -26,10 +26,10 @@ const OperationScreen = () => {
     const sendData = async () => {
         const data = {
             asset_ticker,
-            price: Number(price),
-            qtd: Number(qtd),
+            price,
+            qtd,
             date,
-            fees: Number(fees)
+            fees
         }
 
 
